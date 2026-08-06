@@ -5,6 +5,7 @@ menu = [
     "3. Search offence records",
     "4. Display patrol summary",
     "5. Exit Program"
+    "6. test"
 ]
 
 # Dictionary for menu choices

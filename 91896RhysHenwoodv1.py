@@ -5,7 +5,6 @@ menu = [
     "3. Search offence records",
     "4. Display patrol summary",
     "5. Exit Program"
-    "6. test"
 ]
 
 # Dictionary for menu choices
@@ -22,6 +21,16 @@ def display_menu():
     print("\n===== Speeding Offence System =====")
     for option in menu:
         print(option)
+        
+#function to get and validate the driver's licnce number
+def get_licence_number():
+    while True:
+        licence = input("Enter driver's licence number: ").upper()
+        if len(licence) ==8:
+               if licence[:2].isalpha() and licence[2:].isdigit():
+                   return licence
+               
+               print("Invalid licence number. It must be in the format of AB123456.")
 
 # Main Program
 while True:
@@ -30,7 +39,9 @@ while True:
     
     if choice in menu_options:
         if choice == "5":
-            print("exiting program...")
+            print("Exiting Program...")
             break
         else:
-            print("Invalid choice. Pleas enter a number between 1 and 5.")
+            print("You selected:", menu_options[choice])
+    else:
+        print("Invalid choice. Pleas enter a number between 1 and 5.")

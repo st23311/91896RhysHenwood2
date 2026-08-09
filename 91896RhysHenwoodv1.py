@@ -32,6 +32,29 @@ def get_licence_number():
                
                print("Invalid licence number. It must be in the format of AB123456.")
 
+#function to get and validate the driver's full name
+def get_driver_name():
+    while True:
+        name = input("Enter driver's full name: ").strip()
+
+        if name != "":
+            return name.title()
+
+        print("Driver's name cannot be blank.")
+        
+#Function to gert and validate tthe postred speed limit
+def get_speed_limit():
+    while True:
+        speed_limit = input("Enter posted speed limit (30-110 km/h): ")
+        
+        if speed_limit.isdigit():
+            speed_limit = int(speed_limit)
+            
+            if 30 <= speed_limit <= 110:
+                return speed_limit
+
+        print("Invalid speed limit. Enter a whole number between 30 and 110.")            
+
 # Main Program
 while True:
     display_menu()
@@ -43,7 +66,10 @@ while True:
             break
         else:
             if choice == "1":
+                driver_name = get_driver_name()
                 licence_number = get_licence_number()
+                
+                print("Driver Name:", driver_name)
                 print("Licence Number:", licence_number)
     else:
         print("Invalid choice. Pleas enter a number between 1 and 5.")

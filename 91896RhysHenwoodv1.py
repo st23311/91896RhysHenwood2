@@ -42,6 +42,8 @@ while True:
             print("Exiting Program...")
             break
         else:
-            print("You selected:", menu_options[choice])
+            if choice == "1":
+                licence_number = get_licence_number()
+                print("Licence Number:", licence_number)
     else:
         print("Invalid choice. Pleas enter a number between 1 and 5.")

@@ -53,7 +53,23 @@ def get_speed_limit():
             if 30 <= speed_limit <= 110:
                 return speed_limit
 
-        print("Invalid speed limit. Enter a whole number between 30 and 110.")            
+        print("Invalid speed limit. Enter a whole number between 30 and 110.")
+        
+#function to get and validate the recoreded speed 
+def get_recorded_speed(speed_limit):
+    while True:
+        recorded_speed = input("Enter recorded speed (km/h): ")
+
+        if recorded_speed.isdigit():
+            recorded_speed = int(recorded_speed)
+
+            if recorded_speed > speed_limit:
+                return recorded_speed
+            else:
+                print("No speeding offence occurred.")
+                return None
+
+        print("Invalid speed. Enter a whole number.")
 
 # Main Program
 while True:
@@ -68,8 +84,15 @@ while True:
             if choice == "1":
                 driver_name = get_driver_name()
                 licence_number = get_licence_number()
+                speed_limit = get_speed_limit()
+                recorded_speed = get_recorded_speed(speed_limit)
                 
                 print("Driver Name:", driver_name)
                 print("Licence Number:", licence_number)
+                print("Posted Speed Limit:", speed_limit, "km/h")
+               
+                if recorded_speed is not None:
+                    print("Recorded Speed:", recorded_speed, "km/h")                
+                
     else:
         print("Invalid choice. Pleas enter a number between 1 and 5.")

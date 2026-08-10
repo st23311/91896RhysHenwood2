@@ -16,6 +16,14 @@ menu_options = {
     "5": "Exit Program"
 }
 
+wanted_people = [
+    "Rhys Henwood",
+    "Connor Peter Riley",
+    "Max Homan",
+    "Taylor Hall",
+    "John Smith"
+]
+
 #function to display menu.
 def display_menu():
     print("\n===== Speeding Offence System =====")
@@ -70,6 +78,15 @@ def get_recorded_speed(speed_limit):
                 return None
 
         print("Invalid speed. Enter a whole number.")
+        
+#function to check if the driver is wanted
+def check_wanted(driver_name):
+    if driver_name in wanted_people:
+        print("WARNINGL: This driver is on the wanted lsit!")
+        return True
+    else:
+        print("driver is not on the wanted lsit.:)")
+        return False
 
 # Main Program
 while True:

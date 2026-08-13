@@ -105,7 +105,47 @@ def view_offences():
                   f"{offence['Licence']:<12}"
                   f"{offence['Limit']:<8}"
                   f"{offence['Speed']:<8}"
-                  f"{offence['Over']:<8}")        
+                  f"{offence['Over']:<8}")   
+            
+#Function to search for an offence 
+
+def search_offences():
+    search = input("Enter a driver's full name or licence plate number: ").strip().upper()
+    
+    found = False 
+    
+    for offence in offences:
+    #Seach by drivers name 
+        if offence["Driver"].upper() == search:
+            print("\nOffence found:")
+            print("Driver:", offence["Driver"])
+            print("Licence:",offence["Licence"])
+            print("Speed limit:", offence["Limit"], "km/h")
+            print("Recorded Speed limit:",offence["Speed"], "km/h")
+            print("Over Limit:",offence["Over"], "km/h")
+
+            found = True
+            
+            
+            #Search by Licence plate number
+            
+        elif offence["Licence"].upper() == search:
+                print("\nOffence found:")
+                print("Driver:", offence["Driver"])
+                print("Licence:",offence["Licence"])
+                print("Speed limit:", offence["Limit"], "km/h")
+                print("Recorded Speed limit:",offence["Speed"], "km/h")
+                print("Over Limit:",offence["Over"], "km/h")
+
+                found = True
+                
+            
+    if not found:
+        print("There are no driver's names or licence number in our offence records")
+                
+            
+            
+
 
 # Main Program
 while True:
@@ -146,7 +186,7 @@ while True:
             view_offences()
 
         elif choice == "3":
-            print("Search offence records")
+            search_offences()
 
         elif choice == "4":
             print("Patrol summary")

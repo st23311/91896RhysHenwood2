@@ -15,7 +15,7 @@ menu_options = {
     "4": "Display patrol summary",
     "5": "Exit Program"
 }
-
+#list to record wanted people
 wanted_people = [
     "Rhys Henwood",
     "Connor Peter Riley",
@@ -23,6 +23,9 @@ wanted_people = [
     "Taylor Hall",
     "John Smith"
 ]
+
+# List to store recorded offences
+offences = []
 
 #function to display menu.
 def display_menu():
@@ -87,6 +90,22 @@ def check_wanted(driver_name):
     else:
         print("driver is not on the wanted lsit.:)")
         return False
+    
+#Function to display all recorded offences    
+def view_offences():
+    if len(offences) == 0:
+        print("\n No recorded offences have occurred")
+    else:
+        print("\n===== Recorded Offences =====")
+        print(f"{'Driver':<20}{'Licence':<12}{'Limit':<8}{'Speed':<8}{'Over':<8}")
+        print("-" * 56)
+        
+        for offence in offences:
+            print(f"{offence['Driver']:<20}"
+                  f"{offence['Licence']:<12}"
+                  f"{offence['Limit']:<8}"
+                  f"{offence['Speed']:<8}"
+                  f"{offence['Over']:<8}")        
 
 # Main Program
 while True:
@@ -94,22 +113,47 @@ while True:
     choice=input("\nEnter your choice (1-5): ")
     
     if choice in menu_options:
-        if choice == "5":
+
+        if choice == "1":
+            driver_name = get_driver_name()
+            licence_number = get_licence_number()
+            speed_limit = get_speed_limit()
+            recorded_speed = get_recorded_speed(speed_limit)
+
+            print("Driver Name:", driver_name)
+            print("Licence Number:", licence_number)
+            print("Posted Speed Limit:", speed_limit, "km/h")
+
+            if recorded_speed is not None:
+                print("Recorded Speed:", recorded_speed, "km/h")
+
+                over = recorded_speed - speed_limit
+
+                offence = {
+                    "Driver": driver_name,
+                    "Licence": licence_number,
+                    "Limit": speed_limit,
+                    "Speed": recorded_speed,
+                    "Over": over
+                }
+
+                offences.append(offence)
+
+                # Check if driver is wanted
+                check_wanted(driver_name)
+
+        elif choice == "2":
+            view_offences()
+
+        elif choice == "3":
+            print("Search offence records")
+
+        elif choice == "4":
+            print("Patrol summary")
+
+        elif choice == "5":
             print("Exiting Program...")
             break
-        else:
-            if choice == "1":
-                driver_name = get_driver_name()
-                licence_number = get_licence_number()
-                speed_limit = get_speed_limit()
-                recorded_speed = get_recorded_speed(speed_limit)
-                
-                print("Driver Name:", driver_name)
-                print("Licence Number:", licence_number)
-                print("Posted Speed Limit:", speed_limit, "km/h")
-               
-                if recorded_speed is not None:
-                    print("Recorded Speed:", recorded_speed, "km/h")                
-                
+
     else:
         print("Invalid choice. Pleas enter a number between 1 and 5.")

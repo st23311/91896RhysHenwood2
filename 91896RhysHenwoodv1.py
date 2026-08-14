@@ -7,7 +7,7 @@ menu = [
     "5. Exit Program"
 ]
 
-# Dictionary for menu choices
+# Dictionary for menu options
 menu_options = {
     "1": "Record a speeding offence",
     "2": "View all recorded offences",
@@ -82,6 +82,22 @@ def get_recorded_speed(speed_limit):
 
         print("Invalid speed. Enter a whole number.")
         
+
+#fuction to calculate the fine
+def calculate_fine(over):
+    if over<= 10:
+        return 30
+    elif over <=20:
+        return 80
+    elif over <=30:
+        return 170
+    elif over <=40:
+        return 400
+    else:
+        return 630
+    
+
+        
 #function to check if the driver is wanted
 def check_wanted(driver_name):
     if driver_name in wanted_people:
@@ -115,7 +131,7 @@ def search_offences():
     found = False 
     
     for offence in offences:
-    #Seach by drivers name 
+    #Seach 
         if offence["Driver"].upper() == search:
             print("\nOffence found:")
             print("Driver:", offence["Driver"])
@@ -168,13 +184,20 @@ while True:
                 print("Recorded Speed:", recorded_speed, "km/h")
 
                 over = recorded_speed - speed_limit
+                    
+                    #calculate the fine
+                fine = calculate_fine(over)
+                    
+                print("Speed sxceeded by:", over, "km/h")
+                print("Infringment fine: $", fine)                
 
                 offence = {
                     "Driver": driver_name,
                     "Licence": licence_number,
                     "Limit": speed_limit,
                     "Speed": recorded_speed,
-                    "Over": over
+                    "Over": over,
+                    "Fine":fine
                 }
 
                 offences.append(offence)

@@ -159,10 +159,42 @@ def search_offences():
     if not found:
         print("There are no driver's names or licence number in our offence records")
                 
-            
-            
 
+#Function to do patrol summary
+def patrol_summary():
+    if len(offences) == 0:
+        print("\nNo offences has been recorded")
+        return 
 
+#totla number of offences 
+total_offences = len(offences)
+
+#Total value of offences
+total_fines = 0
+for offence in offences:
+    total_fines += offence["Fine"]
+    
+#Average amoutnt over the speed limit 
+total_over = 0
+for offence in offences:
+    total_over += offence["Over"]
+    
+average_over = total_over / total_offences 
+
+#Find the highest speeder
+highest_offence = offences[0]
+for offence in offences:
+    if offence["Over"] > highest_offence["Over"]:
+        highest_offence = offence
+#Display patrol summary
+
+print("\n======Patrol Summary =====")
+print("Total offences recorded:", total_offences)
+print("Total vlaue of infringment fines: $", total_fines)
+print("average speed over the limit:", round(average_over, 1), "km/h")
+print("Highest speeding offence:")
+print("Driver:", highest_offence["Driver"])
+print("Speed over limit:", highest_offence["Over"],"km/h")
 # Main Program
 while True:
     display_menu()
@@ -189,7 +221,7 @@ while True:
                 fine = calculate_fine(over)
                     
                 print("Speed sxceeded by:", over, "km/h")
-                print("Infringment fine: $", fine)                
+                print("Infringment fine:$ ", fine)                
 
                 offence = {
                     "Driver": driver_name,
@@ -212,7 +244,7 @@ while True:
             search_offences()
 
         elif choice == "4":
-            print("Patrol summary")
+            patrol_summary()
 
         elif choice == "5":
             print("Exiting Program...")

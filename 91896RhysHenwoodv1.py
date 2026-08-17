@@ -1,4 +1,5 @@
 # List of menu options
+#a list is yused to store all of the options that will be displayed to the user when the main menu is shown 
 menu = [
     "1. Record a speeding offence",
     "2. View all recorded offences",
@@ -8,6 +9,7 @@ menu = [
 ]
 
 # Dictionary for menu options
+#this dicotionary stores each menu as a key and the descrition of the option ias its value and makes it easy to check whether the user's menu choise is a valid option
 menu_options = {
     "1": "Record a speeding offence",
     "2": "View all recorded offences",
@@ -16,6 +18,7 @@ menu_options = {
     "5": "Exit Program"
 }
 #list to record wanted people
+#when an offence is recorded, the driver's name is checekd against this list and if the name is found the program should display a warning.
 wanted_people = [
     "Rhys Henwood",
     "Connor Peter Riley",
@@ -25,17 +28,24 @@ wanted_people = [
 ]
 
 # List to store recorded offences
+#the empty list is used to store all speeding offences recorded during the patrol such as driver's name, licence number, speed limit, recorded speed, amount over and the fine.
 offences = []
 
 #function to display menu.
+#a for loop is used to go through eveyr iterm in the menu lsit and print it.
 def display_menu():
+    #print a heading
     print("\n===== Speeding Offence System =====")
+    #go through each option in the menu
     for option in menu:
+        #display the current menu option
         print(option)
         
-#function to get and validate the driver's licnce number
+#function to get and validate the driver's licnce number and checks that it follows the valid format of "AB123456"
 def get_licence_number():
+    #keep repeating until a valid licence number is entered.
     while True:
+        #
         licence = input("Enter driver's licence number: ").upper()
         if len(licence) ==8:
                if licence[:2].isalpha() and licence[2:].isdigit():
@@ -166,35 +176,35 @@ def patrol_summary():
         print("\nNo offences has been recorded")
         return 
 
-#totla number of offences 
-total_offences = len(offences)
+    #totla number of offences 
+    total_offences = len(offences)
 
-#Total value of offences
-total_fines = 0
-for offence in offences:
-    total_fines += offence["Fine"]
+    #Total value of offences
+    total_fines = 0
+    for offence in offences:
+        total_fines += offence["Fine"]
     
-#Average amoutnt over the speed limit 
-total_over = 0
-for offence in offences:
-    total_over += offence["Over"]
+    #Average amoutnt over the speed limit 
+    total_over = 0
+    for offence in offences:
+        total_over += offence["Over"]
     
-average_over = total_over / total_offences 
+        average_over = total_over / total_offences 
 
-#Find the highest speeder
-highest_offence = offences[0]
-for offence in offences:
-    if offence["Over"] > highest_offence["Over"]:
-        highest_offence = offence
-#Display patrol summary
+        #Find the highest speeder
+        highest_offence = offences[0]
+        for offence in offences:
+            if offence["Over"] > highest_offence["Over"]:
+                highest_offence = offence
+                #Display patrol summary
 
-print("\n======Patrol Summary =====")
-print("Total offences recorded:", total_offences)
-print("Total vlaue of infringment fines: $", total_fines)
-print("average speed over the limit:", round(average_over, 1), "km/h")
-print("Highest speeding offence:")
-print("Driver:", highest_offence["Driver"])
-print("Speed over limit:", highest_offence["Over"],"km/h")
+                print("\n======Patrol Summary =====")
+                print("Total offences recorded:", total_offences)
+                print("Total vlaue of infringment fines: $", total_fines)
+                print("average speed over the limit:", round(average_over, 1), "km/h")
+                print("Highest speeding offence:")
+                print("Driver:", highest_offence["Driver"])
+                print("Speed over limit:", highest_offence["Over"],"km/h")
 # Main Program
 while True:
     display_menu()

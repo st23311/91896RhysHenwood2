@@ -45,64 +45,84 @@ def display_menu():
 def get_licence_number():
     #keep repeating until a valid licence number is entered.
     while True:
-        #
+        #Ask the user for their licence number and .upper() converts the lowercase letters to uppercase.
         licence = input("Enter driver's licence number: ").upper()
+        #check that the licence numbner contains excatly 8 charcters
         if len(licence) ==8:
+            #check that the first 2 are letters while the remaining 6 are numbenrs
                if licence[:2].isalpha() and licence[2:].isdigit():
+                   #return the valid number
                    return licence
-               
-               print("Invalid licence number. It must be in the format of AB123456.")
+               #if the licence numbner was invalid, display a error until the format is correct.
+        print("Invalid licence number. It must be in the format of AB123456.")
 
 #function to get and validate the driver's full name
 def get_driver_name():
+    #continue asking until a valid name is entered
     while True:
+        #ask the user for the driver's name and .strip() removes the spaces at the start/end of a user's input
         name = input("Enter driver's full name: ").strip()
-
+        #check that hte user did not leave the input blank
         if name != "":
+            #retun the name with capitalisation
             return name.title()
-
+        #display an error if the name was blank 
         print("Driver's name cannot be blank.")
         
 #Function to gert and validate tthe postred speed limit
 def get_speed_limit():
+    #keep asking until valid infomation is entered
     while True:
+        #ask the user for hte posted speed limit
         speed_limit = input("Enter posted speed limit (30-110 km/h): ")
-        
+        #check whether the input contains numbers
         if speed_limit.isdigit():
+            #convert the inpuut from a string to a interger
             speed_limit = int(speed_limit)
-            
+            #check that the speed limit is between 30 and 110 
             if 30 <= speed_limit <= 110:
+                #retun valid speed limit
                 return speed_limit
-
+            #display an error if the speed was invalid
         print("Invalid speed limit. Enter a whole number between 30 and 110.")
         
 #function to get and validate the recoreded speed 
 def get_recorded_speed(speed_limit):
     while True:
+        #ask the user for recorded speed
         recorded_speed = input("Enter recorded speed (km/h): ")
-
+        #check whether in input contains only numenrs
         if recorded_speed.isdigit():
+            #convert the input into an interger
             recorded_speed = int(recorded_speed)
-
+            #check whether the driver is actually speeding
             if recorded_speed > speed_limit:
+                #retun valid recorded speed if it is an offence 
                 return recorded_speed
             else:
+                #tell the user that no speeding has occurred
                 print("No speeding offence occurred.")
+                #retun none as there is no offence 
                 return None
-
+            #display an error if the speed was not a whole number 
         print("Invalid speed. Enter a whole number.")
         
 
 #fuction to calculate the fine
 def calculate_fine(over):
+    #if the driver was 10km/h or less over the limit and get a fine of $30
     if over<= 10:
         return 30
+    #if the driver was between 11 and 20kmh over and get a find of $80
     elif over <=20:
         return 80
+    #if the driver was between 21 and 30kmh over and get a find of $170
     elif over <=30:
         return 170
+    #if the driver was between 31 and 40kmh over and get a find of $400    
     elif over <=40:
         return 400
+    #if the driver is 41km/h or over they get a fine of $630 
     else:
         return 630
     
@@ -110,22 +130,27 @@ def calculate_fine(over):
         
 #function to check if the driver is wanted
 def check_wanted(driver_name):
+    #check whether the driver's name is in the wanted list
     if driver_name in wanted_people:
         print("WARNINGL: This driver is on the wanted lsit!")
         return True
     else:
+        #tell the user the driver is not wanted
         print("driver is not on the wanted lsit.:)")
         return False
     
 #Function to display all recorded offences    
 def view_offences():
+    #cehcks whether the offences list is empty
     if len(offences) == 0:
-        print("\n No recorded offences have occurred")
+        #tell the user that there are no offecnes
+        print("\nNo recorded offences have occurred")
     else:
         print("\n===== Recorded Offences =====")
+        #display column headings
         print(f"{'Driver':<20}{'Licence':<12}{'Limit':<8}{'Speed':<8}{'Over':<8}")
         print("-" * 56)
-        
+        #display the infomation from the current offence 
         for offence in offences:
             print(f"{offence['Driver']:<20}"
                   f"{offence['Licence']:<12}"
@@ -137,11 +162,11 @@ def view_offences():
 
 def search_offences():
     search = input("Enter a driver's full name or licence plate number: ").strip().upper()
-    
+    #variable keeps track of wethere a matchw as found, and starts false as nothing has been found yet
     found = False 
-    
+    #go through every recorded offence 
     for offence in offences:
-    #Seach 
+    #Seach by the driver's name 
         if offence["Driver"].upper() == search:
             print("\nOffence found:")
             print("Driver:", offence["Driver"])
@@ -149,7 +174,7 @@ def search_offences():
             print("Speed limit:", offence["Limit"], "km/h")
             print("Recorded Speed limit:",offence["Speed"], "km/h")
             print("Over Limit:",offence["Over"], "km/h")
-
+            #change found variable to true because a match was found 
             found = True
             
             
@@ -165,13 +190,14 @@ def search_offences():
 
                 found = True
                 
-            
+    #after searching  every offence ,check whether anyhting was found         
     if not found:
         print("There are no driver's names or licence number in our offence records")
                 
 
 #Function to do patrol summary
 def patrol_summary():
+    #check if there are any offences
     if len(offences) == 0:
         print("\nNo offences has been recorded")
         return 
@@ -181,7 +207,9 @@ def patrol_summary():
 
     #Total value of offences
     total_fines = 0
+    #go throguh every recorded offence 
     for offence in offences:
+        #add the current offence's fine to thte total 
         total_fines += offence["Fine"]
     
     #Average amoutnt over the speed limit 
@@ -214,6 +242,8 @@ while True:
 
         if choice == "1":
             driver_name = get_driver_name()
+            # Check if driver is wanted
+            check_wanted(driver_name)
             licence_number = get_licence_number()
             speed_limit = get_speed_limit()
             recorded_speed = get_recorded_speed(speed_limit)
@@ -244,7 +274,7 @@ while True:
 
                 offences.append(offence)
 
-                # Check if driver is wanted
+                #Tell the user again that the guy is wanted.
                 check_wanted(driver_name)
 
         elif choice == "2":
